@@ -1,8 +1,3 @@
-const PRODUCTS = [
-  { id: "conmebol", name: "Patch Conmebol", cat: "Competições", price: 14.90, oldPrice: null, badge: "Disponível", img: "assets/patches/conmebol.svg" },
-  { id: "europeu",  name: "Patch Europeu",  cat: "Competições", price: 14.90, oldPrice: null, badge: "Disponível", img: "assets/patches/europeu.svg" },
-];
-
 function money(v){
   return v.toLocaleString("pt-BR", { style: "currency", currency: "BRL" });
 }
@@ -43,7 +38,8 @@ function cardTemplate(p){
 function renderGrid(){
   const grid = document.getElementById("productGrid");
   if (!grid) return;
-  grid.innerHTML = PRODUCTS.map(cardTemplate).join("");
+  const products = (typeof GmpesStore !== "undefined") ? GmpesStore.getProducts() : [];
+  grid.innerHTML = products.map(cardTemplate).join("");
 }
 
 function setupMobileNav(){
@@ -68,7 +64,7 @@ function setupMobileNav(){
 }
 
 function setupScrollSpy(){
-  const sections = ["inicio","catalogo","como-funciona","compatibilidade","comunidade"]
+  const sections = ["inicio","catalogo"]
     .map(id => document.getElementById(id))
     .filter(Boolean);
   const links = document.querySelectorAll(".nav-link");
